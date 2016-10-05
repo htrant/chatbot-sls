@@ -1,12 +1,12 @@
 {
   "name": "receiver",
-  "runtime": "nodejs",
-  "description": "Serverless Lambda function for project: chatbot-sls",
+  "runtime": "nodejs4.3",
+  "description": "Chatbot receiver",
   "customName": false,
   "customRole": false,
-  "handler": "handler.handler",
+  "handler": "functions/reciever/handler.handler",
   "timeout": 6,
-  "memorySize": 1024,
+  "memorySize": 128,
   "authorizer": {},
   "custom": {
     "excludePatterns": []
@@ -21,7 +21,11 @@
       "apiKeyRequired": false,
       "requestParameters": {},
       "requestTemplates": {
-        "application/json": ""
+        "application/json": {
+          "hubChallenge": "$input.params('hub.challenge')",
+          "hubVerifyToken": "$input.params('hub.verify_token')",
+          "method": "$context.httpMethod"
+        }
       },
       "responses": {
         "400": {
