@@ -1,0 +1,12 @@
+{
+  "extends": "airbnb",
+  "rules": {
+    "id-length": [2, { "exceptions": ["_", "x", "y", "i", "e"] }],
+    "spaced-comment": [0],
+    "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
+    "no-unused-expressions": [2, {"allowShortCircuit": true, "allowTernary": true}],
+    "comma-dangle": [0],
+    "no-param-reassign": [2, { "props": false }],
+    "func-names": [0]
+  }
+}
