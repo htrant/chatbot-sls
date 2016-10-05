@@ -12,5 +12,7 @@
     "type": "git",
     "url": ""
   },
-  "dependencies": {}
+  "dependencies": {
+    "axios": "^0.14.0"
+  }
 }
