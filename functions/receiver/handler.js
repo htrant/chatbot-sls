@@ -10,4 +10,9 @@ module.exports.handler = (event, context, callback) => {
       return callback('Invalid token');
     }
   }
+
+  if (event.method === 'POST') {
+    const data = req.body;
+      return callback(data);
+  }
 };
