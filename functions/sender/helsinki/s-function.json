@@ -1,0 +1,26 @@
+{
+  "name": "helsinki",
+  "runtime": "nodejs4.3",
+  "description": "Helsinki bot sender returning responses to users",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/sender/helsinki/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
