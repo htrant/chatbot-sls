@@ -4,7 +4,7 @@
   "description": "Chatbot receiver",
   "customName": false,
   "customRole": false,
-  "handler": "functions/reciever/handler.handler",
+  "handler": "functions/receiver/handler.handler",
   "timeout": 6,
   "memorySize": 128,
   "authorizer": {},
@@ -74,7 +74,11 @@
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
-    "SERVERLESS_REGION": "${region}"
+    "SERVERLESS_REGION": "${region}",
+    "FB_GRAPH_API": "${fbGraphApi}",
+    "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/",
+    "ESPOO_LINKEDEVENT_API": "",
+    "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/"
   },
   "vpc": {
     "securityGroupIds": [],
