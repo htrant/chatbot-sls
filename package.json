@@ -13,6 +13,7 @@
     "url": ""
   },
   "dependencies": {
-    "axios": "^0.14.0"
+    "axios": "^0.14.0",
+    "serverless-secrets": "^2.0.2"
   }
 }

@@ -1,18 +1,62 @@
 'use strict';
 
-const FB_VERIFY_TOKEN = '';
+const axios = require('axios');
+const fbGraphApi = process.env.FB_GRAPH_API;
+
+
+const getRequest = event => {
+  return new Promise((resolve, reject) => {
+    event.payload.entry.map(entry => {
+      entry.messaging.map(messageItem => {
+        const text = messageItem.message.text.toLowerCase();
+        const textArray = text.split(" ");
+        const reqMsg = {
+          senderId: messageItem.sender.id
+        };
+        if (textArray[0] !== undefined && textArray[1] !== undefined && textArray[2] !== undefined) {
+          reqMsg.city = textArray[0];
+          reqMsg.eventType = textArray[1];
+          reqMsg.time = textArray[2];
+          resolve(reqMsg);
+        } else {
+          reqMsg.text = 'Sorry, you sent message in invalid format';
+          reject(reqMsg);
+        }
+      });
+    });
+  });
+};
+
 
 module.exports.handler = (event, context, callback) => {
-  if (event.method === 'GET') {
-    if (event.hubVerifyToken == FB_VERIFY_TOKEN && event.hubChallenge) {
-      return callback(null, parseInt(event.hubChallenge));
-    } else {
-      return callback('Invalid token');
-    }
-  }
-
-  if (event.method === 'POST') {
-    const data = req.body;
-      return callback(data);
-  }
+  getRequest(event)
+    .then(usrMsg => {
+      const reply = `City is ${usrMsg.city}, event type is ${usrMsg.eventType}, time is ${usrMsg.time}`;
+      const payload = {
+        recipient: {
+          id: usrMsg.senderId
+        },
+        message: {
+          text: reply
+        }
+      };
+      axios.post(fbGraphApi, payload)
+        .then(response => {
+          return callback(null, response);
+        });
+    })
+    .catch(exception => {
+      const payload = {
+        recipient: {
+          id: exception.senderId
+        },
+        message: {
+          text: exception.text
+        }
+      };
+      axios.post(fbGraphApi, payload)
+        .then(response => {
+          return callback(exception);
+        });
+    });
 };
