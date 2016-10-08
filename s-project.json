@@ -1,5 +1,16 @@
 {
   "name": "chatbot-sls",
-  "custom": {},
-  "plugins": []
+  "custom": {
+    "secrets": {
+      "kms": {
+        "default": ""
+      },
+      "kmsfile": {
+        "default": ""
+      }
+    }
+  },
+  "plugins": [
+    "serverless-secrets"
+  ]
 }
