@@ -1,7 +1,11 @@
 'use strict';
 
-module.exports.handler = function(event, context) {
-  return context.done(null, {
-    message: 'Go Serverless! Your Lambda function executed successfully!'
-  });
+const axios = require('axios');
+const fbGraphApi = process.env.FB_GRAPH_API;
+const helApi = process.env.HKI_LINKEDEVENT_API;
+
+
+module.exports.handler = (event, context, callback) => {
+  const reply = `List of events:`;
+
 };
