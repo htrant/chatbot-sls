@@ -2,6 +2,11 @@
 
 const axios = require('axios');
 const fbGraphApi = process.env.FB_GRAPH_API;
+const aws = require('aws-sdk');
+const lambda = new aws.Lambda({
+  apiVersion: '2015-03-31',
+  region: process.env.SERVERLESS_REGION
+});
 
 
 const getRequest = event => {
@@ -42,7 +47,7 @@ module.exports.handler = (event, context, callback) => {
       };
       axios.post(fbGraphApi, payload)
         .then(response => {
-          return callback(null, response);
+          callback(null, response);
         });
     })
     .catch(exception => {
@@ -56,7 +61,7 @@ module.exports.handler = (event, context, callback) => {
       };
       axios.post(fbGraphApi, payload)
         .then(response => {
-          return callback(exception);
+          callback(exception);
         });
     });
 };
