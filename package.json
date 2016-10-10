@@ -13,7 +13,8 @@
     "url": ""
   },
   "dependencies": {
+    "aws-sdk": "^2.6.7",
     "axios": "^0.14.0",
-    "serverless-secrets": "^2.0.2"
+    "striptags": "^2.1.1"
   }
 }

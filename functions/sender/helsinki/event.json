@@ -1,0 +1,13 @@
+{
+  "city": "helsinki",
+  "time": "today",
+  "type": "music",
+  "payload": {
+    "recipient": {
+      "id": "1172209789518451"
+    },
+    "message": {
+      "text": "Sorry, we cannot find any event"
+    }
+  }
+}

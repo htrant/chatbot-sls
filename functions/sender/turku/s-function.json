@@ -1,0 +1,26 @@
+{
+  "name": "turku",
+  "runtime": "nodejs4.3",
+  "description": "Turku bot sender replying to users",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/sender/turku/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
