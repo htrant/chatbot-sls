@@ -6,21 +6,6 @@ const fbGraphApi = process.env.FB_GRAPH_API;
 const helApi = process.env.HKI_LINKEDEVENT_API;
 
 
-const replyUser = data => {
-  const name = (data[i].name.en === undefined) ? data[i].name.fi : data[i].name.en;
-  const description = (data[i].description.en === undefined) ? data[i].description.fi : data[i].description.en;
-  let infoUrl;
-  if (data[i].info_url !== null) {
-    infoUrl = (data[i].info_url.en !== undefined) ? data[i].info_url.en : 'n/a';
-  } else {
-    infoUrl = 'n/a';
-  }
-  const replyMsg = `${i + 1}. ${name}: ${description}. More: ${infoUrl}\n`;
-  resPayload.message.text = striptags(replyMsg);
-  return axios.post(fbGraphApi, resPayload);
-};
-
-
 module.exports.handler = (event, context, callback) => {
   const time = event.time;
   const eventType = event.type;
