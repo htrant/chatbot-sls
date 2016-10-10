@@ -1,1 +1,28 @@
-{}
+{
+  "payload": {
+    "object": "page",
+    "entry": [
+      {
+        "id": "303681383346312",
+        "time": 1476099434574,
+        "messaging": [
+          {
+            "sender": {
+              "id": "1172209789518451"
+            },
+            "recipient": {
+              "id": "303681383346312"
+            },
+            "timestamp": 1476099434454,
+            "message": {
+              "mid": "mid.1476099434443:0967098ed00846d813",
+              "seq": 192,
+              "text": "helsinki dance today"
+            }
+          }
+        ]
+      }
+    ]
+  },
+  "method": "POST"
+}

@@ -49,19 +49,19 @@
         ]
       }
     },
-    "IamPolicyLambdaKMS": {
+    "IamInvokeLambdaFn": {
       "Type": "AWS::IAM::Policy",
       "Properties": {
-        "PolicyName": "${stage}-${project}-lambda-kms",
+        "PolicyName": "${stage}-${project}-lambda-invocation",
         "PolicyDocument": {
           "Version": "2012-10-17",
           "Statement": [
             {
               "Effect": "Allow",
               "Action": [
-                "kms:Decrypt"
+                "lambda:InvokeFunction"
               ],
-              "Resource": "arn:aws:kms:*:*:*"
+              "Resource": "*"
             }
           ]
         },
