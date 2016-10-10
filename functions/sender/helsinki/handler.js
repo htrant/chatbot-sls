@@ -32,6 +32,7 @@ module.exports.handler = (event, context, callback) => {
       return axios.post(fbGraphApi, resPayload);
     })
     .catch(error => {
+      resPayload.message.text = 'Sorry, we cannot find any event';
       axios.post(fbGraphApi, resPayload);
       callback(error);
     });
