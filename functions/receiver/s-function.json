@@ -76,9 +76,7 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "FB_GRAPH_API": "${fbGraphApi}",
-    "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/",
-    "ESPOO_LINKEDEVENT_API": "",
-    "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/"
+    "HKI_SENDER": "${project}-helsinki"
   },
   "vpc": {
     "securityGroupIds": [],
