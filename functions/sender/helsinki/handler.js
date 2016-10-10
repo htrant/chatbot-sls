@@ -11,6 +11,7 @@ module.exports.handler = (event, context, callback) => {
   const eventType = event.type;
   const resPayload = event.payload;
   const queryApi = `${helApi}&q=${eventType}&start=${time}`;
+  console.log(queryApi);
   axios.get(queryApi)
     .then(response => {
       const data = response.data.data;
@@ -29,7 +30,6 @@ module.exports.handler = (event, context, callback) => {
         replyMsg += `${i + 1}. ${name}. More: ${infoUrl}\n`;
       }
       resPayload.message.text = striptags(replyMsg);
-      console.log(JSON.stringify(resPayload));
       return axios.post(fbGraphApi, resPayload)
         .then(response => {
           callback(null, response);
