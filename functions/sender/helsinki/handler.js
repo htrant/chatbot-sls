@@ -14,7 +14,7 @@ module.exports.handler = (event, context, callback) => {
   axios.get(queryApi)
     .then(response => {
       const data = response.data.data;
-      const max = (data.length < 3) ? data.length : 3;
+      const max = (data.length < 2) ? data.length : 2;
       let replyMsg = 'List of events:\n';
       for (let i = 0; i < max; i++) {
         const name = (data[i].name.en === undefined) ? data[i].name.fi : data[i].name.en;
@@ -29,7 +29,11 @@ module.exports.handler = (event, context, callback) => {
         replyMsg += `${i + 1}. ${name}. More: ${infoUrl}\n`;
       }
       resPayload.message.text = striptags(replyMsg);
-      return axios.post(fbGraphApi, resPayload);
+      console.log(JSON.stringify(resPayload));
+      return axios.post(fbGraphApi, resPayload)
+        .then(response => {
+          callback(null, response);
+        });
     })
     .catch(error => {
       resPayload.message.text = 'Sorry, we cannot find any event';

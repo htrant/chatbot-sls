@@ -25,9 +25,29 @@ const getRequest = event => {
           resolve(reqMsg);
         } else {
           reqMsg.text = 'Sorry, you sent message in invalid format';
-          reject(reqMsg);
+          reject(reqMsg.senderId);
         }
       });
+    });
+  });
+};
+
+
+const invokeLambda = payload => {
+  console.log('invoking helsinki sender...');
+  return new Promise((resolve, reject) => {
+    const params = {
+      FunctionName: process.env.HKI_SENDER,
+      Payload: JSON.stringify(payload, null, 2)
+    };
+    lambda.invoke(params, (err, data) => {
+      if (err) {
+        console.log(err);
+        reject(payload.recipient.id);
+      } else {
+        console.log(data);
+        resolve(data);
+      }
     });
   });
 };
@@ -36,32 +56,36 @@ const getRequest = event => {
 module.exports.handler = (event, context, callback) => {
   getRequest(event)
     .then(usrMsg => {
-      const reply = `City is ${usrMsg.city}, event type is ${usrMsg.eventType}, time is ${usrMsg.time}`;
-      const payload = {
-        recipient: {
-          id: usrMsg.senderId
-        },
-        message: {
-          text: reply
+      const lambdaPayload = {
+        city: usrMsg.city,
+        time: usrMsg.time,
+        type: usrMsg.eventType,
+        payload: {
+          recipient: {
+            id: usrMsg.senderId
+          },
+          message: {
+            text: ''
+          }
         }
       };
-      axios.post(fbGraphApi, payload)
-        .then(response => {
-          callback(null, response);
-        });
+      return invokeLambda(lambdaPayload);
     })
-    .catch(exception => {
+    .then(response => {
+      callback(null, response);
+    })
+    .catch(senderId => {
       const payload = {
         recipient: {
-          id: exception.senderId
+          id: senderId
         },
         message: {
-          text: exception.text
+          text: 'Sorry, we are sufferring technical issues.'
         }
       };
       axios.post(fbGraphApi, payload)
         .then(response => {
-          callback(exception);
+          console.log(response);
         });
     });
 };
