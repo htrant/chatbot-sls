@@ -1,0 +1,30 @@
+{
+  "name": "processor",
+  "runtime": "nodejs4.3",
+  "description": "Sender processor returning response to FB users",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/sender/processor/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}","FB_GRAPH_API": "${fbGraphApi}",
+    "FB_GRAPH_API": "${fbGraphApi}",
+    "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/search/?page_size=10&type=event&",
+    "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/search/?",
+    "ESPOO_LINKEDEVENT_API": "",
+    "MAX_EVENTS": 10
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
