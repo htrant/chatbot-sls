@@ -10,22 +10,32 @@ const lambda = new aws.Lambda({
 
 
 const getRequest = event => {
+  console.info('start getRequest(event)');
   return new Promise((resolve, reject) => {
     event.payload.entry.map(entry => {
       entry.messaging.map(messageItem => {
         const text = messageItem.message.text.toLowerCase();
-        const textArray = text.split(" ");
+        const textArray = text.split(' ');
         const reqMsg = {
           senderId: messageItem.sender.id
         };
         if (textArray[0] !== undefined && textArray[1] !== undefined && textArray[2] !== undefined) {
-          reqMsg.city = textArray[0];
-          reqMsg.eventType = textArray[1];
-          reqMsg.time = textArray[2];
+          if (textArray[0] !== 'helsinki' && textArray[0] !== 'turku' /*&& textArray[0] !== 'espoo'*/) {
+            reject({
+              sender: reqMsg.senderId,
+              reason: `Sorry, the service is not available in ${textArray[0]}`
+            });
+          } else {
+            reqMsg.city = textArray[0];
+            reqMsg.eventType = textArray[1];
+            reqMsg.time = textArray[2];
+          }
           resolve(reqMsg);
         } else {
-          reqMsg.text = 'Sorry, you sent message in invalid format';
-          reject(reqMsg.senderId);
+          reject({
+            sender: reqMsg.senderId,
+            reason: 'Sorry, you sent message in invalid format'
+          });
         }
       });
     });
@@ -34,18 +44,21 @@ const getRequest = event => {
 
 
 const invokeLambda = payload => {
-  console.log('invoking helsinki sender...');
+  console.info('call lambda function sender processor');
   return new Promise((resolve, reject) => {
     const params = {
-      FunctionName: process.env.HKI_SENDER,
+      FunctionName: process.env.LAMBDA_SENDER_PROCESSOR,
       Payload: JSON.stringify(payload, null, 2)
     };
     lambda.invoke(params, (err, data) => {
       if (err) {
-        console.log(err);
-        reject(payload.recipient.id);
+        console.error('failure:', JSON.stringify(err));
+        reject({
+          sender: payload.recipient.id,
+          reason: 'Sorry, we have some technical problems'
+        });
       } else {
-        console.log(data);
+        console.info('success:', JSON.stringify(data));
         resolve(data);
       }
     });
@@ -54,8 +67,11 @@ const invokeLambda = payload => {
 
 
 module.exports.handler = (event, context, callback) => {
+  console.info('invoke lambda function receiver');
+  console.info('event:', JSON.stringify(event, null, 2));
   getRequest(event)
     .then(usrMsg => {
+      console.info('usrMsg:', JSON.stringify(usrMsg));
       const lambdaPayload = {
         city: usrMsg.city,
         time: usrMsg.time,
@@ -69,23 +85,24 @@ module.exports.handler = (event, context, callback) => {
           }
         }
       };
+      console.info('lambda payload:', JSON.stringify(lambdaPayload));
       return invokeLambda(lambdaPayload);
     })
-    .then(response => {
-      callback(null, response);
-    })
-    .catch(senderId => {
+    .catch(error => {
+      console.error('failure', JSON.stringify(error, null, 2));
       const payload = {
         recipient: {
-          id: senderId
+          id: error.sender
         },
         message: {
-          text: 'Sorry, we are sufferring technical issues.'
+          text: error.reason
         }
       };
+      console.info(`FB api: ${fbGraphApi}`);
+      console.info('FB send payload:', JSON.stringify(payload));
       axios.post(fbGraphApi, payload)
-        .then(response => {
-          console.log(response);
+        .catch(error => {
+          console.error('FB send error:', JSON.stringify(error));
         });
     });
 };
