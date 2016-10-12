@@ -76,7 +76,8 @@
     "SERVERLESS_STAGE": "${stage}",
     "SERVERLESS_REGION": "${region}",
     "FB_GRAPH_API": "${fbGraphApi}",
-    "HKI_SENDER": "${project}-helsinki"
+    "HKI_SENDER": "${project}-helsinki",
+    "LAMBDA_SENDER_PROCESSOR": "${project}-processor"
   },
   "vpc": {
     "securityGroupIds": [],
