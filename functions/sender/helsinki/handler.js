@@ -10,7 +10,7 @@ module.exports.handler = (event, context, callback) => {
   const time = event.time;
   const eventType = event.type;
   const resPayload = event.payload;
-  const queryApi = `${helApi}&q=${eventType}&start=${time}`;
+  const queryApi = `${helApi}q=${eventType}&start=${time}`;
   console.log(queryApi);
   axios.get(queryApi)
     .then(response => {
