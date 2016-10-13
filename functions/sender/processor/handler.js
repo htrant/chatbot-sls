@@ -4,6 +4,8 @@ const axios = require('axios');
 const striptags = require('striptags');
 const fbGraphApi = process.env.FB_GRAPH_API;
 const maxEvents = process.env.MAX_EVENTS;
+const genericImg = process.env.GENERIC_IMAGE;
+const genericUrl = process.env.GENERIC_URL;
 
 
 const prepareFbPayload = (fbPayload, allEvents) => {
@@ -14,11 +16,11 @@ const prepareFbPayload = (fbPayload, allEvents) => {
     fbPayload.message.attachment = {
       type: 'template',
       payload: {
-        template_type: 'generic',
-        elements: []
+        template_type: 'generic'
       }
     };
     const max = (allEvents.length < maxEvents) ? allEvents.length : maxEvents;
+    let allEventElements = [];
     for (let i = 0; i < max; i++) {
       let eventName = '';
       if (allEvents[i].name.en === undefined || allEvents[i].name.en === '') {
@@ -26,24 +28,30 @@ const prepareFbPayload = (fbPayload, allEvents) => {
       } else {
         eventName = allEvents[i].name.en;
       }
-      let infoUrl = 'http://www.google.com';
+      let infoUrl = genericUrl;
       if (allEvents[i].info_url !== null) {
         infoUrl = (allEvents[i].info_url.en !== undefined) ? allEvents[i].info_url.en : allEvents[i].info_url.fi;
       }
+      let imageUrl = genericImg;
+      if (allEvents[i].images.length > 0) {
+        imageUrl = allEvents[i].images[0].url;
+      }
       const singleEventElement = {
         title: eventName,
-        image_url: allEvents[i].images[0].url,
+        image_url: imageUrl,
         subtitle: eventName,
         buttons: [
           {
             type: 'web_url',
-            url: infoUrl,
+            url: (infoUrl === '') ? genericUrl : infoUrl,
             title: 'More details'
           }
         ]
       };
-      fbPayload.message.attachment.payload.element.push(singleEventElement);
+      allEventElements.push(singleEventElement);
     }
+    console.info('all event elements:', JSON.stringify(allEventElements, null, 2));
+    fbPayload.message.attachment.payload.elements = allEventElements;
   }
   return fbPayload;
 };
@@ -59,19 +67,6 @@ module.exports.handler = (event, context, callback) => {
   axios.get(queryApi)
     .then(response => {
       const allEvents = response.data.data;
-      // const max = (allEvents.length < maxEvents) ? allEvents.length : maxEvents;
-      // let replyMsg = '';
-      // for (let i = 0; i < max; i++) {
-      //   let eventName = '';
-      //   if (allEvents[i].name.en === undefined || allEvents[i].name.en === '') {
-      //     eventName = allEvents[i].name.fi;
-      //   } else {
-      //     eventName = allEvents[i].name.en;
-      //   }
-      //   replyMsg += `${i + 1}- ${eventName}\n`;
-      // }
-      // console.info('reply message:', JSON.stringify(replyMsg, null, 2));
-      // fbPayload.message.text = striptags(replyMsg);
       fbPayload = prepareFbPayload(fbPayload, allEvents);
       console.info('FB payload:', JSON.stringify(fbPayload, null, 2));
       return axios.post(fbGraphApi, fbPayload);
