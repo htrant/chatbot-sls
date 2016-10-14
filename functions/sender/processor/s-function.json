@@ -16,12 +16,14 @@
   "environment": {
     "SERVERLESS_PROJECT": "${project}",
     "SERVERLESS_STAGE": "${stage}",
-    "SERVERLESS_REGION": "${region}","FB_GRAPH_API": "${fbGraphApi}",
+    "SERVERLESS_REGION": "${region}",
     "FB_GRAPH_API": "${fbGraphApi}",
     "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/search/?page_size=10&type=event&",
     "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/search/?",
     "ESPOO_LINKEDEVENT_API": "",
-    "MAX_EVENTS": 10
+    "MAX_EVENTS": 10,
+    "GENERIC_URL": "http://www.google.com",
+    "GENERIC_IMAGE": "http://oi40.tinypic.com/flevpd.jpg"
   },
   "vpc": {
     "securityGroupIds": [],
