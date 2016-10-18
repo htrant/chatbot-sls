@@ -48,7 +48,8 @@ const invokeLambda = payload => {
   return new Promise((resolve, reject) => {
     const params = {
       FunctionName: process.env.LAMBDA_SENDER_PROCESSOR,
-      Payload: JSON.stringify(payload, null, 2)
+      Payload: JSON.stringify(payload, null, 2),
+      Qualifier: process.env.SERVERLESS_STAGE
     };
     lambda.invoke(params, (err, data) => {
       if (err) {
