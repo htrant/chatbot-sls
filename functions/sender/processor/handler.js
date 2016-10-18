@@ -69,6 +69,7 @@ module.exports.handler = (event, context, callback) => {
       const allEvents = response.data.data;
       fbPayload = prepareFbPayload(fbPayload, allEvents);
       console.info('FB payload:', JSON.stringify(fbPayload, null, 2));
+      console.info(`FB api: ${fbGraphApi}`);
       return axios.post(fbGraphApi, fbPayload);
     })
     .then(response => {
