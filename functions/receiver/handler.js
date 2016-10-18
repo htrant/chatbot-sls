@@ -69,6 +69,16 @@ const invokeLambda = payload => {
 module.exports.handler = (event, context, callback) => {
   console.info('invoke lambda function receiver');
   console.info('event:', JSON.stringify(event, null, 2));
+
+  // verify fb app token
+  if (event.method === 'GET') {
+    if (event.hubVerifyToken === process.env.FB_APP_VERIFY_TOKEN && event.hubChallenge) {
+      callback(null, parseInt(event.hubChallenge));
+    } else {
+      callback('Invalid token');
+    }
+  }
+
   getRequest(event)
     .then(usrMsg => {
       console.info('usrMsg:', JSON.stringify(usrMsg));
