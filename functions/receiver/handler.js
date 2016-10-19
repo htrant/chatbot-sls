@@ -39,6 +39,9 @@ const getRequest = event => {
                 reason: 'Sorry, the date format is invalid. Please use yyyy-mm-dd'
               });
             }
+            if (textArray[3] !== undefined && validator.isISO8601(textArray[3])) {
+              reqMsg.endtime = textArray[3];
+            }
           }
           resolve(reqMsg);
         } else {
@@ -106,6 +109,9 @@ module.exports.handler = (event, context, callback) => {
           }
         }
       };
+      if (usrMsg.endtime !== undefined) {
+        lambdaPayload.endtime = usrMsg.endtime;
+      }
       console.info('lambda payload:', JSON.stringify(lambdaPayload));
       return invokeLambda(lambdaPayload);
     })

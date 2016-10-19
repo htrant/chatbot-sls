@@ -20,6 +20,7 @@ const prepareFbPayload = (fbPayload, allEvents) => {
       }
     };
     const max = (allEvents.length < maxEvents) ? allEvents.length : maxEvents;
+    console.log(max);
     let allEventElements = [];
     for (let i = 0; i < max; i++) {
       let eventName = '';
@@ -61,7 +62,10 @@ module.exports.handler = (event, context, callback) => {
   console.info('invoke lambda function processor');
   console.info('event:', JSON.stringify(event, null, 2));
   const apiEndpoint = (event.city === 'helsinki') ? process.env.HKI_LINKEDEVENT_API : process.env.TKU_LINKEDEVENT_API;
-  const queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
+  let queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
+  if (event.endtime !== undefined) {
+    queryApi += `&end=${event.endtime}`;
+  }
   let fbPayload = event.payload;
   console.info(`query api: ${queryApi}`);
   axios.get(queryApi)
