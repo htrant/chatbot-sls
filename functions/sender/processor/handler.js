@@ -62,7 +62,10 @@ module.exports.handler = (event, context, callback) => {
   console.info('event:', JSON.stringify(event, null, 2));
   const apiEndpoint = (event.city === 'helsinki') ? process.env.HKI_LINKEDEVENT_API : process.env.TKU_LINKEDEVENT_API;
   const websiteUrl = (event.city === 'helsinki') ? process.env.HKI_WEBSITE_URL : process.env.TKU_WEBSITE_URL;
-  const queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
+  let queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
+  if (event.endtime !== undefined) {
+    queryApi += `&end=${event.endtime}`;
+  }
   let fbPayload = event.payload;
   console.info(`query api: ${queryApi}`);
   axios.get(queryApi)
