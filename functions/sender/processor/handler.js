@@ -8,7 +8,7 @@ const genericImg = process.env.GENERIC_IMAGE;
 const genericUrl = process.env.GENERIC_URL;
 
 
-const prepareFbPayload = (fbPayload, allEvents) => {
+const prepareFbPayload = (websiteUrl, fbPayload, allEvents) => {
   if (allEvents.length === 0) {
     fbPayload.message.text = 'Sorry, we cannot find any event';
   } else {
@@ -28,10 +28,10 @@ const prepareFbPayload = (fbPayload, allEvents) => {
       } else {
         eventName = allEvents[i].name.en;
       }
-      let infoUrl = genericUrl;
-      if (allEvents[i].info_url !== null) {
-        infoUrl = (allEvents[i].info_url.en !== undefined) ? allEvents[i].info_url.en : allEvents[i].info_url.fi;
-      }
+      const infoUrl = websiteUrl + allEvents[i].id + '/fi';
+      // if (allEvents[i].info_url !== null) {
+      //   infoUrl = (allEvents[i].info_url.en !== undefined) ? allEvents[i].info_url.en : allEvents[i].info_url.fi;
+      // }
       let imageUrl = genericImg;
       if (allEvents[i].images.length > 0) {
         imageUrl = allEvents[i].images[0].url;
@@ -43,7 +43,7 @@ const prepareFbPayload = (fbPayload, allEvents) => {
         buttons: [
           {
             type: 'web_url',
-            url: (infoUrl === '') ? genericUrl : infoUrl,
+            url: infoUrl,
             title: 'More details'
           }
         ]
@@ -61,13 +61,14 @@ module.exports.handler = (event, context, callback) => {
   console.info('invoke lambda function processor');
   console.info('event:', JSON.stringify(event, null, 2));
   const apiEndpoint = (event.city === 'helsinki') ? process.env.HKI_LINKEDEVENT_API : process.env.TKU_LINKEDEVENT_API;
+  const websiteUrl = (event.city === 'helsinki') ? process.env.HKI_WEBSITE_URL : process.env.TKU_WEBSITE_URL;
   const queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
   let fbPayload = event.payload;
   console.info(`query api: ${queryApi}`);
   axios.get(queryApi)
     .then(response => {
       const allEvents = response.data.data;
-      fbPayload = prepareFbPayload(fbPayload, allEvents);
+      fbPayload = prepareFbPayload(websiteUrl, fbPayload, allEvents);
       console.info('FB payload:', JSON.stringify(fbPayload, null, 2));
       console.info(`FB api: ${fbGraphApi}`);
       return axios.post(fbGraphApi, fbPayload);
