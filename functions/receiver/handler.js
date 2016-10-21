@@ -2,6 +2,7 @@
 
 const axios = require('axios');
 const fbGraphApi = process.env.FB_GRAPH_API;
+const validator = require('validator');
 const aws = require('aws-sdk');
 const lambda = new aws.Lambda({
   apiVersion: '2015-03-31',
@@ -28,7 +29,19 @@ const getRequest = event => {
           } else {
             reqMsg.city = textArray[0];
             reqMsg.eventType = textArray[1];
-            reqMsg.time = textArray[2];
+            if (textArray[2] === 'today') {
+              reqMsg.time = 'today';
+            } else if (textArray[2] !== 'today' && validator.isISO8601(textArray[2])) {
+              reqMsg.time = textArray[2];
+            } else {
+              reject({
+                sender: reqMsg.senderId,
+                reason: 'Sorry, the date format is invalid. Please use yyyy-mm-dd'
+              });
+            }
+            if (textArray[3] !== undefined && validator.isISO8601(textArray[3])) {
+              reqMsg.endtime = textArray[3];
+            }
           }
           resolve(reqMsg);
         } else {
@@ -96,6 +109,9 @@ module.exports.handler = (event, context, callback) => {
           }
         }
       };
+      if (usrMsg.endtime !== undefined) {
+        lambdaPayload.endtime = usrMsg.endtime;
+      }
       console.info('lambda payload:', JSON.stringify(lambdaPayload));
       return invokeLambda(lambdaPayload);
     })
