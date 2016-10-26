@@ -29,9 +29,6 @@ const prepareFbPayload = (websiteUrl, fbPayload, allEvents) => {
         eventName = allEvents[i].name.en;
       }
       const infoUrl = websiteUrl + allEvents[i].id + '/fi';
-      // if (allEvents[i].info_url !== null) {
-      //   infoUrl = (allEvents[i].info_url.en !== undefined) ? allEvents[i].info_url.en : allEvents[i].info_url.fi;
-      // }
       let imageUrl = genericImg;
       if (allEvents[i].images.length > 0) {
         imageUrl = allEvents[i].images[0].url;
