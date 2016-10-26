@@ -23,7 +23,9 @@
     "ESPOO_LINKEDEVENT_API": "",
     "MAX_EVENTS": 10,
     "GENERIC_URL": "http://www.google.com",
-    "GENERIC_IMAGE": "http://oi40.tinypic.com/flevpd.jpg"
+    "GENERIC_IMAGE": "http://oi40.tinypic.com/flevpd.jpg",
+    "HKI_WEBSITE_URL": "${hkiWebsiteUrl}",
+    "TKU_WEBSITE_URL": "${tkuWebsiteUrl}"
   },
   "vpc": {
     "securityGroupIds": [],

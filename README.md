@@ -35,7 +35,7 @@ $ sls resources deploy  #deploy resources on AWS
 
 ### _meta/variables/s-variables-prod.json
 {
-  "fbGraphApi": "https://graph.facebook.com/v2.6/me/messages?access_token= YOUR_FACEBOOK_PAGE_ACCESS_TOKEN"
+  "fbGraphApi": "https://graph.facebook.com/v2.6/me/messages?access_token=YOUR_FACEBOOK_PAGE_ACCESS_TOKEN"
 }
 ```
 
