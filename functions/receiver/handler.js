@@ -21,12 +21,7 @@ const getRequest = event => {
           senderId: messageItem.sender.id
         };
         if (textArray[0] !== undefined && textArray[1] !== undefined && textArray[2] !== undefined) {
-          if (textArray[0] !== 'helsinki' && textArray[0] !== 'turku' /*&& textArray[0] !== 'espoo'*/) {
-            reject({
-              sender: reqMsg.senderId,
-              reason: `Sorry, the service is not available in ${textArray[0]}`
-            });
-          } else {
+          if (textArray[0] === 'helsinki' && textArray[0] === 'turku') {
             reqMsg.city = textArray[0];
             reqMsg.eventType = textArray[1];
             if (textArray[2] === 'today') {
@@ -42,6 +37,16 @@ const getRequest = event => {
             if (textArray[3] !== undefined && validator.isISO8601(textArray[3])) {
               reqMsg.endtime = textArray[3];
             }
+          } else if (textArray[0] === 'espoo') {
+            reject({
+              sender: reqMsg.senderId,
+              reason: 'The service will be available in Espoo soon'
+            });
+          } else {
+            reject({
+              sender: reqMsg.senderId,
+              reason: `Sorry, the service is not available in ${textArray[0]}`
+            });
           }
           resolve(reqMsg);
         } else {
