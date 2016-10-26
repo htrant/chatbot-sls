@@ -1,6 +1,6 @@
 #chatbot-sls
 
-#####*chatbit-sls is done for course Software and Application Innovation at LUT*.
+#####*chatbot-sls is done for course Software and Application Innovation at LUT*.
 
 The project aims at utilizing [Linked Events APIs](https://dev.hel.fi/projects/linked-events/) provided by 3 Finnish cities (Helsinki, Espoo, Turku) on project [6aika](http://6aika.fi/). Chatbot (initial target is Facebook Messenger) is able to answer city's public events based on user's chat requests.
 
