@@ -21,7 +21,7 @@ const getRequest = event => {
           senderId: messageItem.sender.id
         };
         if (textArray[0] !== undefined && textArray[1] !== undefined && textArray[2] !== undefined) {
-          if (textArray[0] === 'helsinki' && textArray[0] === 'turku') {
+          if (textArray[0] === 'helsinki' || textArray[0] === 'turku') {
             reqMsg.city = textArray[0];
             reqMsg.eventType = textArray[1];
             if (textArray[2] === 'today') {
