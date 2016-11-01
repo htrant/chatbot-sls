@@ -1,0 +1,38 @@
+{
+  "name": "benchmark",
+  "runtime": "nodejs4.3",
+  "description": "Function to perform benchmarking for chatbot",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/test/benchmark/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [],
+  "events": [
+    {
+      "name": "chatbotBenchmark",
+      "type": "schedule",
+      "config": {
+        "schedule": "cron(0 0/1 * 1/1 * ? *)",
+        "enabled": true
+      }
+    }
+  ],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "PAGE_ID": "${pageId}",
+    "USER1_ID": "${user1}",
+    "USER2_ID": "${user2}",
+    "APIGATEWAY_RECEIVER": "${apiGatewayReceiver}"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
