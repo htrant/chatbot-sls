@@ -7,9 +7,10 @@ const cities = ['espoo', 'helsinki', 'turku'];
 const fbUsers = [process.env.USER1_ID, process.env.USER2_ID];
 
 
-// once function is invoked, 3 various replies are sent to FB users
+// once function is invoked, various replies are sent to FB users
 module.exports.handler = (event, context) => {
-  for (let i = 0; i < 2; i++) {
+  const maxReplies = Math.floor(Math.random()*6) + 1; //get a random number between 1-5
+  for (let i = 0; i < maxReplies; i++) {
     const msgCallback = {
       object: 'page',
       entry: []
