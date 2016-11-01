@@ -50,7 +50,7 @@ module.exports.handler = (event, context) => {
         context.done(null);
       })
       .catch(err => {
-        console.error('error', err);
+        console.error('error');
       })
   }
 };
