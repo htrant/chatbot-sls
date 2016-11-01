@@ -17,8 +17,8 @@
       "name": "chatbotBenchmark",
       "type": "schedule",
       "config": {
-        "schedule": "cron(0 0/1 * 1/1 * ? *)",
-        "enabled": true
+        "schedule": "rate(1 minute)",
+        "enabled": false
       }
     }
   ],
