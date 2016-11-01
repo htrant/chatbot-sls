@@ -46,7 +46,7 @@ module.exports.handler = (event, context) => {
     console.info('receiver endpoint', process.env.APIGATEWAY_RECEIVER);
     axios.post(process.env.APIGATEWAY_RECEIVER, msgCallback)
       .then(res => {
-        console.info('success', res);
+        console.info('success');
         context.done(null);
       })
       .catch(err => {
