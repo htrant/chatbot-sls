@@ -9,7 +9,7 @@ const fbUsers = [process.env.USER1_ID, process.env.USER2_ID];
 
 // once function is invoked, various replies are sent to FB users
 module.exports.handler = (event, context) => {
-  const maxReplies = Math.floor(Math.random()*6) + 1; //get a random number between 1-5
+  const maxReplies = Math.floor(Math.random()*99) + 1;
   console.info('max replies', maxReplies);
   for (let i = 0; i < maxReplies; i++) {
     const msgCallback = {
@@ -47,7 +47,6 @@ module.exports.handler = (event, context) => {
     axios.post(process.env.APIGATEWAY_RECEIVER, msgCallback)
       .then(res => {
         console.info('success');
-        context.done(null);
       })
       .catch(err => {
         console.error('error');
