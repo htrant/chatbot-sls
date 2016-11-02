@@ -14,10 +14,26 @@
   "endpoints": [],
   "events": [
     {
-      "name": "chatbotBenchmark",
+      "name": "rate1",
       "type": "schedule",
       "config": {
         "schedule": "rate(1 minute)",
+        "enabled": false
+      }
+    },
+    {
+      "name": "rate2",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(10 minutes)",
+        "enabled": false
+      }
+    },
+    {
+      "name": "rate3",
+      "type": "schedule",
+      "config": {
+        "schedule": "rate(6 minutes)",
         "enabled": false
       }
     }
