@@ -6,3 +6,7 @@ It is currently set to pick a random number (1-100) as number of test replies se
 ```
 const maxReplies = Math.floor(Math.random()*99) + 1;	//pick a random number between 1-100
 ```
+
+Sample dashboard to monitor continuous chat messages requests
+
+![sample-dashboard](https://github.com/trunghieu138/chatbot-sls/blob/master/functions/test/dashboard.png)
