@@ -43,3 +43,8 @@ $ sls resources deploy  #deploy resources on AWS
 ```
 $ sls dash deploy   #select endpoints and functions to deploy
 ```
+
+## Monitor dashboard
+Sample dashboard to monitor continuous chat messages requests
+
+![sample-dashboard](https://github.com/trunghieu138/chatbot-sls/blob/master/functions/test/dashboard.png)
