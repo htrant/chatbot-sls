@@ -2,6 +2,7 @@
 
 const axios = require('axios');
 const striptags = require('striptags');
+const _ = require('lodash');
 const fbGraphApi = process.env.FB_GRAPH_API;
 const maxEvents = process.env.MAX_EVENTS;
 const genericImg = process.env.GENERIC_IMAGE;
@@ -68,7 +69,20 @@ module.exports.handler = (event, context, callback) => {
   axios.get(queryApi)
     .then(response => {
       const allEvents = response.data.data;
-      fbPayload = prepareFbPayload(websiteUrl, fbPayload, allEvents);
+      if (allEvents.length === 0) {
+        fbPayload = prepareFbPayload(websiteUrl, fbPayload, allEvents);
+      } else {
+        let filteredEvents = [allEvents[0]];
+        _.forEach(allEvents, item => {
+          const sameEvents = _.find(filteredEvents, o => {
+            return o.name.fi == item.name.fi;
+          });
+          if (sameEvents === undefined) {
+            filteredEvents.push(item);
+          }
+        });
+        fbPayload = prepareFbPayload(websiteUrl, fbPayload, filteredEvents);
+      }
       console.info('FB payload:', JSON.stringify(fbPayload, null, 2));
       console.info(`FB api: ${fbGraphApi}`);
       return axios.post(fbGraphApi, fbPayload);
