@@ -58,8 +58,18 @@ const prepareFbPayload = (websiteUrl, fbPayload, allEvents) => {
 module.exports.handler = (event, context, callback) => {
   console.info('invoke lambda function processor');
   console.info('event:', JSON.stringify(event, null, 2));
-  const apiEndpoint = (event.city === 'helsinki') ? process.env.HKI_LINKEDEVENT_API : process.env.TKU_LINKEDEVENT_API;
-  const websiteUrl = (event.city === 'helsinki') ? process.env.HKI_WEBSITE_URL : process.env.TKU_WEBSITE_URL;
+  let apiEndpoint;
+  let websiteUrl;
+  if (event.city === 'helsinki') {
+    apiEndpoint = process.env.HKI_LINKEDEVENT_API;
+    websiteUrl = process.env.HKI_WEBSITE_URL;
+  } else if (event.city === 'turku') {
+    apiEndpoint = process.env.TKU_LINKEDEVENT_API;
+    websiteUrl = process.env.TKU_WEBSITE_URL;
+  } else {
+    apiEndpoint = process.env.ESPOO_LINKEDEVENT_API;
+    websiteUrl = process.env.ESPOO_WEBSITE_URL;
+  }
   let queryApi = `${apiEndpoint}q=${event.type}&start=${event.time}`;
   if (event.endtime !== undefined) {
     queryApi += `&end=${event.endtime}`;
