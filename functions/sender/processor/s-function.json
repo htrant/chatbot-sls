@@ -20,12 +20,13 @@
     "FB_GRAPH_API": "${fbGraphApi}",
     "HKI_LINKEDEVENT_API": "https://api.hel.fi/linkedevents/v1/search/?page_size=10&type=event&",
     "TKU_LINKEDEVENT_API": "http://linkedevents.api.lounaistieto.fi/v1/search/?",
-    "ESPOO_LINKEDEVENT_API": "",
+    "ESPOO_LINKEDEVENT_API": "https://linkedevents-espoo.6aika.fi/v1/event/?page=1&",
     "MAX_EVENTS": 10,
     "GENERIC_URL": "http://www.google.com",
     "GENERIC_IMAGE": "http://oi40.tinypic.com/flevpd.jpg",
     "HKI_WEBSITE_URL": "${hkiWebsiteUrl}",
-    "TKU_WEBSITE_URL": "${tkuWebsiteUrl}"
+    "TKU_WEBSITE_URL": "${tkuWebsiteUrl}",
+    "ESPOO_WEBSITE_URL": "${espooWebsiteUrl}"
   },
   "vpc": {
     "securityGroupIds": [],
