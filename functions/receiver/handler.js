@@ -96,6 +96,16 @@ module.exports.handler = (event, context, callback) => {
   getRequest(event)
     .then(usrMsg => {
       console.info('usrMsg:', JSON.stringify(usrMsg));
+
+      /* reply with sending action */
+      axios.post(fbGraphApi, {
+        recipient: {
+          id: usrMsg.senderId
+        },
+        sender_action: 'typing_on'
+      });
+      /* end sending action */
+
       const lambdaPayload = {
         city: usrMsg.city,
         time: usrMsg.time,
