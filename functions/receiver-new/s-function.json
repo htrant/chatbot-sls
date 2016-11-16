@@ -1,0 +1,86 @@
+{
+  "name": "receiver-new",
+  "runtime": "nodejs4.3",
+  "description": "Chatbot receiver with new UI",
+  "customName": false,
+  "customRole": false,
+  "handler": "functions/receiver-new/handler.handler",
+  "timeout": 6,
+  "memorySize": 128,
+  "authorizer": {},
+  "custom": {
+    "excludePatterns": []
+  },
+  "endpoints": [
+    {
+      "path": "receiver-new",
+      "method": "GET",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": {
+        "application/json": {
+          "hubChallenge": "$input.params('hub.challenge')",
+          "hubVerifyToken": "$input.params('hub.verify_token')",
+          "method": "$context.httpMethod"
+        }
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {
+            "application/json": ""
+          }
+        }
+      }
+    },
+    {
+      "path": "receiver-new",
+      "method": "POST",
+      "type": "AWS",
+      "authorizationType": "none",
+      "authorizerFunction": false,
+      "apiKeyRequired": false,
+      "requestParameters": {},
+      "requestTemplates": {
+        "application/json": {
+          "payload": "$input.json('$')",
+          "method": "$context.httpMethod"
+        }
+      },
+      "responses": {
+        "400": {
+          "statusCode": "400"
+        },
+        "default": {
+          "statusCode": "200",
+          "responseParameters": {},
+          "responseModels": {},
+          "responseTemplates": {
+            "application/json": ""
+          }
+        }
+      }
+    }
+  ],
+  "events": [],
+  "environment": {
+    "SERVERLESS_PROJECT": "${project}",
+    "SERVERLESS_STAGE": "${stage}",
+    "SERVERLESS_REGION": "${region}",
+    "FB_APP_VERIFY_TOKEN": "${fbAppVerifyToken}",
+    "FB_GRAPH_API": "${fbGraphApi}",
+    "DATE_PICKER_URL": "https://date-picker-willykido.c9users.io/date-picker.html"
+  },
+  "vpc": {
+    "securityGroupIds": [],
+    "subnetIds": []
+  }
+}
