@@ -88,7 +88,7 @@ function prepareDatePicker(usrId, city, event) {
               type: 'web_url',
               url: process.env.DATE_PICKER_URL,
               title: 'Select a date',
-              webview_height_ratio: 'full',
+              webview_height_ratio: 'compact',
               messenger_extensions: true,
               fallback_url: ''
             }
