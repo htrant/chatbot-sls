@@ -156,6 +156,15 @@ module.exports.handler = (event, context, callback) => {
     });
     if (msgItem.hasOwnProperty('message')) {
       if (!msgItem.message.hasOwnProperty('attachments')) {
+        /* reply with sending action */
+        axios.post(fbGraphApi, {
+          recipient: {
+            id: msgItem.sender.id
+          },
+          sender_action: 'typing_on'
+        });
+        /* end sending action */
+
         const city = prepareCityPicker(msgItem.sender.id);
         axios.post(fbGraphApi, city)
           .then(error => {
