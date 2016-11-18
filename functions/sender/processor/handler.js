@@ -6,10 +6,11 @@ const _ = require('lodash');
 const fbGraphApi = process.env.FB_GRAPH_API;
 const maxEvents = process.env.MAX_EVENTS;
 const genericImg = process.env.GENERIC_IMAGE;
+const xmasGenericImg = process.env.XMAS_GENERIC_IMAGE;
 const genericUrl = process.env.GENERIC_URL;
 
 
-const prepareFbPayload = (websiteUrl, fbPayload, allEvents) => {
+const prepareFbPayload = (websiteUrl, fbPayload, allEvents, eventImgUrl) => {
   if (allEvents.length === 0) {
     fbPayload.message.text = 'Sorry, we cannot find any event';
   } else {
@@ -30,7 +31,7 @@ const prepareFbPayload = (websiteUrl, fbPayload, allEvents) => {
         eventName = allEvents[i].name.en;
       }
       const infoUrl = websiteUrl + allEvents[i].id + '/fi';
-      let imageUrl = genericImg;
+      let imageUrl = eventImgUrl;
       if (allEvents[i].images.length > 0) {
         imageUrl = allEvents[i].images[0].url;
       }
@@ -60,6 +61,7 @@ module.exports.handler = (event, context, callback) => {
   console.info('event:', JSON.stringify(event, null, 2));
   let apiEndpoint;
   let websiteUrl;
+  const eventImgUrl = (event.type !== 'christmas') ? genericImg : xmasGenericImg;
   if (event.city === 'helsinki') {
     apiEndpoint = process.env.HKI_LINKEDEVENT_API;
     websiteUrl = process.env.HKI_WEBSITE_URL;
@@ -91,7 +93,7 @@ module.exports.handler = (event, context, callback) => {
             filteredEvents.push(item);
           }
         });
-        fbPayload = prepareFbPayload(websiteUrl, fbPayload, filteredEvents);
+        fbPayload = prepareFbPayload(websiteUrl, fbPayload, filteredEvents, eventImgUrl);
       }
       console.info('FB payload:', JSON.stringify(fbPayload, null, 2));
       console.info(`FB api: ${fbGraphApi}`);
