@@ -77,7 +77,8 @@
     "SERVERLESS_REGION": "${region}",
     "FB_APP_VERIFY_TOKEN": "${fbAppVerifyToken}",
     "FB_GRAPH_API": "${fbGraphApi}",
-    "DATE_PICKER_URL": "https://date-picker-willykido.c9users.io/date-picker.html"
+    "DATE_PICKER_URL": "https://date-picker-willykido.c9users.io/date-picker.html",
+    "LAMBDA_SENDER_PROCESSOR": "${project}-processor"
   },
   "vpc": {
     "securityGroupIds": [],
