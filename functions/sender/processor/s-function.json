@@ -24,6 +24,7 @@
     "MAX_EVENTS": 10,
     "GENERIC_URL": "http://www.google.com",
     "GENERIC_IMAGE": "http://oi40.tinypic.com/flevpd.jpg",
+    "XMAS_GENERIC_IMAGE": "http://liseberg.com/Global/Ramverk/Splashar/julmarknad_bodarNY694.jpg",
     "HKI_WEBSITE_URL": "${hkiWebsiteUrl}",
     "TKU_WEBSITE_URL": "${tkuWebsiteUrl}",
     "ESPOO_WEBSITE_URL": "${espooWebsiteUrl}"
