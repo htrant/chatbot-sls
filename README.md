@@ -4,7 +4,7 @@
 
 The project aims at utilizing [Linked Events APIs](https://dev.hel.fi/projects/linked-events/) provided by 3 Finnish cities (Helsinki, Espoo, Turku) on project [6aika](http://6aika.fi/). Chatbot (initial target is Facebook Messenger) is able to answer city's public events based on user's chat requests.
 
-Chatbot is developed with [Serverless Framework v0.5.6](https://serverless.readme.io/v0.5.0/docs), Nodejs (ECMAScript 6), and deployed on Amazon Web Services. During development time, [Serverless Framework v1.x](https://serverless.com/framework/docs/) was officially released with new concepts and features.
+Chatbot is developed with [Serverless Framework v0.5.6](https://serverless.readme.io/v0.5.0/docs), Nodejs, and deployed to AWS. During development time, [Serverless Framework v1.x](https://serverless.com/framework/docs/) was officially released with new concepts and features.
 
 ***(Depreciated)*** The chatbot targets at being able to handle message in format (ISO 8601 date format): ```[city] [event_type] [start_date] [end_date]```. Examples:
 
